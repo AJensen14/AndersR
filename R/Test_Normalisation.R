@@ -79,6 +79,7 @@ Test_Normalisation <- function(filtered_df, sample_matrix) {
   # 4. PCA plots ---------------------------------------------------------------
   plot_pca <- function(norm_df, method_name, meta) {
     norm_df[is.na(norm_df)] <- 0
+    norm_df <- norm_df[apply(norm_df, 1, function(x) var(x) != 0), , drop = FALSE]
     pca <- prcomp(t(norm_df), scale. = TRUE)
     pca_df <- as.data.frame(pca$x)
     pca_df$sample <- rownames(pca_df)

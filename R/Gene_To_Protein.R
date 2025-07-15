@@ -17,6 +17,12 @@
 #' }
 Gene_To_Protein <- function(DA_result, species = "hsapiens"){
 
+  DA_result_working <- DA_result %>%
+    rownames_to_column(var = "Prot") %>%
+    mutate(Prot = sub("^;", "", Prot)) %>%
+    mutate(Prot = unlist(lapply(strsplit(Prot, "\\."),
+                                function(x)x[1])))
+
   ensembl <- useMart("ensembl", dataset = paste0(species, "_gene_ensembl"))
   result <- getBM(
     attributes = c(
@@ -25,7 +31,7 @@ Gene_To_Protein <- function(DA_result, species = "hsapiens"){
       "uniprotsptrembl",
       "description"),
     filters = "external_gene_name",
-    values = rownames(DA_results),
+    values = DA_result_working$Prot,
     mart = ensembl)
 
   result$uniprot <- ifelse(
@@ -36,10 +42,12 @@ Gene_To_Protein <- function(DA_result, species = "hsapiens"){
 
   result_clean <- result %>%
     group_by(external_gene_name) %>%
-    summarise(UniProt_ID = paste(unique(na.omit(uniprot)), collapse = "; "),
-              Protein_Description = paste(unique(na.omit(description)), collapse = "; "))
-
-  output <- data.frame(Gene = rownames(DA_results),
+    summarise(
+      UniProt_ID = if (n() == 0) "" else paste(unique(na.omit(uniprot)), collapse = "; "),
+      Protein_Description = if (n() == 0) "" else paste(unique(na.omit(description)), collapse = "; "),
+      .groups = "drop"
+    )
+  output <- data.frame(Gene = rownames(DA_result),
                        stringsAsFactors = FALSE)
 
   # Merge, preserving all input genes
