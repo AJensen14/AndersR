@@ -78,10 +78,4 @@ GO_from_DA <- function(DA_summary,
   return(final_plot)
 }
 
-DA_summary = Sum_DA
-ontology = "BP"
-use_adj_p = FALSE
-group_up = "Up"
-group_down = "Down"
-top_n = 1
 

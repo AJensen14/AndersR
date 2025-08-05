@@ -23,4 +23,5 @@ Function to specify how you wish to filter out proteins.
 \dontrun{
   filtered_df <- Filter_Proteins(df, matrix, min_frac = 0.5)
 }
+
 }
