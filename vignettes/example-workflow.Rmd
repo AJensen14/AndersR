@@ -1,0 +1,91 @@
+---
+title: "example-workflow"
+author: "Anders Jensen"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Example Worklflow for AndersR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(AndersR)
+```
+
+# Introduction
+
+This document demonstrates how to use the functions in the **AndersR** package. This is mainly an R package to help me with proteomics analysis. If you use this package no need to cite anywhere I just hope it helps. 
+
+## Proteomics
+
+As I mentioned above, its mainly for proteomics analysis but there are other sections for more niche functions. 
+
+### Read in data
+
+Currently this package supports reading in output files from; Spectronaut, MaxQuant and ProgenesisQI. You can skip this part if you already have a clean dataset (Proteins in rows and Samples in columns)
+
+MaxQuant - Tidy_MaxQuant
+SpectroNaut - Tidy_Spectronaut
+Progensis - Tidy_Progenesis
+
+For help with these functions run ?function_name
+
+### Produce dummy data
+
+This function is able to generate some sample data for you to pratice with in case you are experiencing errors and also how I will show you how to use the package. 
+
+You can specify many things about your test dataset and it is probably best to match your own. 
+
+```{r dummy}
+
+df <- Dummy_Data(n_proteins = 1000,
+                 group1 = "control",
+                 group2 = "treated",
+                 n_replicates = 6,
+                 missing_frac = 0.1)
+
+head(df, 10)
+
+```
+
+### Tidy column names
+
+This function and the Add_Grouping() functions are mainly here to help you tidy up your column names in cases where they are complex. 
+
+You can do this on excel however this function will start an interactive process in the R console where you can manually input column names. Its a bit of a pain but easy enough. 
+
+### Add grouping 
+
+Same as above. It helps me because my column names are always messed up. 
+
+### Make matrix
+
+
+### Check filtering 
+
+### Filter data
+
+### Test normalisation 
+
+### Normalise data
+
+### Differential abundance analysis
+
+### Convert gene names to protein 
+
+### Summarise DA analysis
+
+### Volcano plot
+
+### Boxplots
+
+
+
+

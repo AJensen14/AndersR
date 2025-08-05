@@ -58,7 +58,6 @@ GO_from_DA <- function(DA_summary,
 
   plot_down <- dotplot(ego_down, showCategory = top_n) +
     ggtitle(paste("More abundant in", group_down))
-
   # Combine the two dotplots
   combined_plot <- cowplot::plot_grid(
     plot_up, plot_down,
@@ -78,3 +77,11 @@ GO_from_DA <- function(DA_summary,
   final_plot <- plot_grid(title, combined_plot, ncol = 1, rel_heights = c(0.1, 1))
   return(final_plot)
 }
+
+DA_summary = Sum_DA
+ontology = "BP"
+use_adj_p = FALSE
+group_up = "Up"
+group_down = "Down"
+top_n = 1
+

@@ -16,6 +16,9 @@ library(ggrepel)
 library(limma)
 library(scales)
 library(colorspace)
+library(clusterProfiler)
+library(org.Hs.eg.db)  # You can change this if needed
+
 
 # Adding in the protein assay function
 use_r("Protein_Assay")
@@ -45,7 +48,7 @@ gitcreds::gitcreds_set()
 # then commit in the git tab in the top right
 
 # make a reference file for each function with examples
-
+setwd(dir = "E:/Anders R package/AndersR/")
 
 # Making new functions
 usethis::use_r("Tidy_Spectronaut")
@@ -59,6 +62,8 @@ usethis::use_r("Normalise_Data")
 usethis::use_r("Differential_Abundance_Analysis")
 usethis::use_r("Volcano_Plot")
 usethis::use_r("Summarise_DA")
+usethis::use_r("Weekly_Runs")
+usethis::use_r("GO_from_DA")
 
 # This is a good start but need to clean up
 # Quantile norm loses gene names - Fixed
@@ -76,10 +81,10 @@ usethis::use_r("Dummy_Data")
 
 # Then push to github
 # Then write in the read me file using devtools::readme()
-usethis::create_github_token()
-gitcreds::gitcreds_set()
-# Then run usethis::use_github()
-usethis::use_github()
+# just commit and push in top right window
+# make a markdown with dummy data fucntion and inclide that to github page
+usethis::use_vignette("example-workflow")
+
 # Re-purpose shiny app with these functions
 # Re-develop app
 # Send mandy sample metadata

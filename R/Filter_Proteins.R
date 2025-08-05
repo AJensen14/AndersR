@@ -13,9 +13,11 @@
 #' \dontrun{
 #'   filtered_df <- Filter_Proteins(df, matrix, min_frac = 0.5)
 #' }
+#'
 Filter_Proteins <- function(data, matrix, min_frac = 0.7) {
   # Ensure order matches and use only matrix$sample columns
   df <- data[, matrix$sample, drop = FALSE]
+  rownames(df) <- rownames(data)
 
   # For each group, find samples
   group_list <- split(matrix$sample, matrix$group)
@@ -34,9 +36,8 @@ Filter_Proteins <- function(data, matrix, min_frac = 0.7) {
 
   # Filter rows
   filtered_df <- df[keep, , drop = FALSE]
+  rownames(filtered_df) <- rownames(df)[keep]
 
   # Retain rownames properly
   return(filtered_df)
 }
-
-
