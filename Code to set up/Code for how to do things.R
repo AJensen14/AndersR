@@ -43,7 +43,7 @@ gitcreds::gitcreds_set()
 
 # Then do the roxygen skeleton
 
-# document it
+# document it (this is very important otherwise doesnt work)
 
 # then commit in the git tab in the top right
 
@@ -64,6 +64,7 @@ usethis::use_r("Volcano_Plot")
 usethis::use_r("Summarise_DA")
 usethis::use_r("Weekly_Runs")
 usethis::use_r("GO_from_DA")
+usethis::use_r("Load_Packages")
 
 # This is a good start but need to clean up
 # Quantile norm loses gene names - Fixed
