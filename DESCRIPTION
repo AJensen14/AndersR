@@ -1,10 +1,9 @@
 Package: AndersR
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Title: Proteomics Analysis Package 
+Version: 2.0
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+    person("Anders", "Jensen", , "9085anders.jensen@gmail.com", role = c("aut", "cre"))
+Description: Simple R package for analysing proteomics data. Also contains useful functions I needed during my PhD and post-doc.
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
 Encoding: UTF-8
