@@ -77,5 +77,3 @@ GO_from_DA <- function(DA_summary,
   final_plot <- plot_grid(title, combined_plot, ncol = 1, rel_heights = c(0.1, 1))
   return(final_plot)
 }
-
-

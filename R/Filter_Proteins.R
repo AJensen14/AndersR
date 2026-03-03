@@ -4,39 +4,43 @@
 #'
 #' @param data The dataset to filter
 #' @param matrix The metadata matrix
-#' @param min_frac The percent of proteins to filter out (0 - 1)
+#' @param min_samples The minimum number of samples the protein needs to be in.
 #'
 #' @return A filtered dataset
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#'   filtered_df <- Filter_Proteins(df, matrix, min_frac = 0.5)
+#'   filtered_df <- Filter_Proteins(df, matrix, min_samples = 3)
 #' }
 #'
-Filter_Proteins <- function(data, matrix, min_frac = 0.7) {
+Filter_Proteins <- function(data, matrix, min_samples) {
   # Ensure order matches and use only matrix$sample columns
-  df <- data[, matrix$sample, drop = FALSE]
-  rownames(df) <- rownames(data)
-
-  # For each group, find samples
-  group_list <- split(matrix$sample, matrix$group)
+  df_check <- data[, matrix$sample, drop = FALSE] # makes sure you only get samples from your matrix
+  rownames(df_check) <- rownames(data) # puts rownames back as they are lost
 
   # For each protein, calculate % present in each group
-  is_expressed_enough <- apply(df, 1, function(protein_row) {
-    sapply(group_list, function(samples_in_group) {
-      subset <- protein_row[samples_in_group]
-      # Define "present" as non-NA and > 0
-      mean(!is.na(subset) & subset > 0) >= min_frac
-    })
-  })
+  long_data <- df_check %>%
+    rownames_to_column(var = "protein") %>%
+    melt() %>%
+    dplyr::rename(sample = variable) %>%
+    left_join(matrix, by = c("sample" = "sample")) %>%
+    group_by(protein, group) %>%
+    summarise(detected = count(!is.na(value))) %>%
+    filter(detected >= min_samples) %>%
+    ungroup() %>%
+    group_by(protein) %>%
+    filter(n() > 1) %>%
+    ungroup()
 
-  # Keep proteins that are present in enough samples in *all* groups
-  keep <- apply(is_expressed_enough, 2, all)
+  # make vector of good proteins
+  proteins <- unique(long_data$protein)
 
-  # Filter rows
-  filtered_df <- df[keep, , drop = FALSE]
-  rownames(filtered_df) <- rownames(df)[keep]
+  # filter df_check based on this
+  filtered_df <- df_check %>%
+    rownames_to_column(var = "protein") %>%
+    filter(protein %in% proteins) %>%
+    column_to_rownames(var = "protein")
 
   # Retain rownames properly
   return(filtered_df)

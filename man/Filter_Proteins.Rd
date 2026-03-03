@@ -4,14 +4,14 @@
 \alias{Filter_Proteins}
 \title{Filtering protein function}
 \usage{
-Filter_Proteins(data, matrix, min_frac = 0.7)
+Filter_Proteins(data, matrix, min_samples)
 }
 \arguments{
 \item{data}{The dataset to filter}
 
 \item{matrix}{The metadata matrix}
 
-\item{min_frac}{The percent of proteins to filter out (0 - 1)}
+\item{min_samples}{The minimum number of samples the protein needs to be in.}
 }
 \value{
 A filtered dataset
@@ -21,7 +21,7 @@ Function to specify how you wish to filter out proteins.
 }
 \examples{
 \dontrun{
-  filtered_df <- Filter_Proteins(df, matrix, min_frac = 0.5)
+  filtered_df <- Filter_Proteins(df, matrix, min_samples = 3)
 }
 
 }
